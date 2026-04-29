@@ -1,0 +1,98 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0b0f19, #0f4c4c);
+  color: #fff;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.title {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 16px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 15px;
+}
+
+.quality {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.quality button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #1f9d8a;
+  color: white;
+}
+
+.compress-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #1f9d8a, #2f6bff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.result {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.dropzone {
+  border: 2px dashed #1f9d8a;
+  border-radius: 12px;
+  padding: 40px;
+  width: 400px;
+  text-align: center;
+  margin-bottom: 20px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.dropzone:hover {
+  background: rgba(31, 157, 138, 0.1);
+  border-color: #2f6bff;
+}

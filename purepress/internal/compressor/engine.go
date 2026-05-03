@@ -9,7 +9,12 @@ import (
 func Compress(inputPath string, quality int) (string, error) {
 	ext := strings.ToLower(filepath.Ext(inputPath))
 
-	output := filepath.Join(filepath.Dir(inputPath), "compressed.jpg")
+	var output string
+	if ext == ".pdf" {
+		output = filepath.Join(filepath.Dir(inputPath), "compressed.pdf")
+	} else {
+		output = filepath.Join(filepath.Dir(inputPath), "compressed.jpg")
+	}
 
 	switch ext {
 	case ".jpg", ".jpeg":
@@ -22,6 +27,10 @@ func Compress(inputPath string, quality int) (string, error) {
 
 	case ".webp":
 		err := CompressWebP(inputPath, output, quality)
+		return output, err
+
+	case ".pdf":
+		err := CompressPDF(inputPath, output)
 		return output, err
 
 	default:

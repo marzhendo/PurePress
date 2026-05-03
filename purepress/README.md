@@ -9,13 +9,14 @@ PurePress is a modern, lightweight, and blazing-fast desktop application for ima
 ## ✨ Features
 
 - **Drag & Drop Interface:** Easily drag and drop images directly into the application.
-- **Multiple Input Formats:** Supports **JPG**, **PNG**, and **WebP** formats.
-- **Optimized Output:** Converts and optimizes all inputs into high-quality **JPG** files.
+- **Native File Picker:** Added "Choose File" button to browse locally using the native OS dialog.
+- **Multiple Input Formats:** Supports **JPG**, **PNG**, **WebP**, and now **PDF** documents!
+- **Optimized Output:** Converts and optimizes images into high-quality **JPG** files, and compresses **PDF** files directly.
 - **Smart Compression Levels:** 
   - **Low** (High file size, 90% quality)
   - **Normal** (Balanced size and quality, 70% quality)
   - **High** (Smallest file size, 40% quality)
-- **Modern UI:** Features a sleek, responsive Glassmorphism design.
+- **Modern UI:** Features a sleek, responsive Glassmorphism design with loading indicators during processing.
 - **Privacy First:** 100% offline processing. Your images never leave your local machine.
 
 ---
@@ -54,13 +55,13 @@ The compiled binary will be available in the uild/bin/ directory.
 ## 📖 How to Use
 
 1. **Launch PurePress.**
-2. **Select an Image:** Click the **"Choose File"** button or simply **Drag & Drop** an image (JPG, PNG, or WebP) into the designated dashed area.
-3. **Select Quality:** Choose your desired compression level:
+2. **Select an Image or PDF:** Click the **"Choose File"** button to open the file explorer, or simply **Drag & Drop** a file (JPG, PNG, WebP, or PDF) into the designated dashed area.
+3. **Select Quality:** Choose your desired compression level (applies to images):
    - Low: Best graphical quality.
    - Normal: Recommended for general use.
    - High: Best for saving disk space.
-4. **Compress:** Click the **"Compress"** button. The application will process the image.
-5. **Done!** The compressed file will be saved in the exact same folder as your original file, named compressed.jpg.
+4. **Compress:** Click the **"Compress"** button. The application will show a spinner while processing your file.
+5. **Done!** The compressed file will be saved in the exact same folder as your original file, named `compressed.jpg` (or `compressed.pdf` for documents).
 
 ---
 

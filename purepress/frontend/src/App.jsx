@@ -13,19 +13,24 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const handleDrop = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const file = e.dataTransfer.files[0];
+    const file = e.dataTransfer.files[0];
 
-  console.log("FILE:", file);
+    if (file) {
+      const ext = file.name.split(".").pop().toLowerCase();
+      const allowed = ["jpg", "jpeg", "png", "webp", "pdf"];
 
-  if (file) {
-    console.log("PATH:", file.path); // 🔥 ini penting
+      if (!allowed.includes(ext)) {
+        setResult("Unsupported file type");
+        return;
+      }
 
-    setFileName(file.name);
-    setFilePath(file.path);
-  }
-};
+      setFileName(file.name);
+      setFilePath(file.path);
+      setResult("");
+    }
+  };
 
   const handleCompress = async () => {
     console.log("CLICKED");
@@ -89,8 +94,18 @@ function App() {
             const path = await SelectFile();
 
             if (path) {
+              const name = path.split("\\").pop();
+              const ext = name.split(".").pop().toLowerCase();
+              const allowed = ["jpg", "jpeg", "png", "webp", "pdf"];
+
+              if (!allowed.includes(ext)) {
+                setResult("Unsupported file type");
+                return;
+              }
+
               setFilePath(path);
-              setFileName(path.split("\\").pop());
+              setFileName(name);
+              setResult("");
             }
           }}>
             Choose File
@@ -132,9 +147,9 @@ function App() {
       </div>
 
       <p className="info">
-        Supported: JPG, PNG, WebP (converted to JPG)
+        Supported: JPG, PNG, WebP, PDF (optimized)
         <br />
-        Output format: JPG (optimized)
+        PDF compression powered by Ghostscript
       </p>
     </div>
   );

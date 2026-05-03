@@ -6,14 +6,20 @@ import (
 	"strings"
 )
 
-func Compress(inputPath string, quality int) (string, error) {
+func Compress(inputPath string, quality int, outputDir string) (string, error) {
 	ext := strings.ToLower(filepath.Ext(inputPath))
+
+	if outputDir == "" {
+		outputDir = filepath.Dir(inputPath)
+	}
+
+	baseName := strings.TrimSuffix(filepath.Base(inputPath), filepath.Ext(inputPath))
 
 	var output string
 	if ext == ".pdf" {
-		output = filepath.Join(filepath.Dir(inputPath), "compressed.pdf")
+		output = filepath.Join(outputDir, baseName+"_compressed.pdf")
 	} else {
-		output = filepath.Join(filepath.Dir(inputPath), "compressed.jpg")
+		output = filepath.Join(outputDir, baseName+"_compressed.jpg")
 	}
 
 	switch ext {

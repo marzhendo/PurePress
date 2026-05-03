@@ -149,6 +149,71 @@ h1 {
   box-shadow: 0 4px 12px rgba(31, 157, 138, 0.3);
 }
 
+.output-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.output-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+.output-info svg {
+  color: #1f9d8a;
+  opacity: 0.9;
+}
+
+.output-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.output-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+}
+
+.output-path {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.change-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.change-btn:hover {
+  background: rgba(31, 157, 138, 0.8);
+}
+
+.change-btn:active {
+  transform: scale(0.95);
+}
+
 .compress-btn {
   width: 100%;
   padding: 14px;
@@ -184,13 +249,65 @@ h1 {
 }
 
 .result {
-  margin-top: 20px;
+  margin-top: 15px;
   padding: 12px;
-  font-size: 14px;
-  color: #a0d8d0;
-  background: rgba(0, 0, 0, 0.2);
+  font-size: 13px;
   border-radius: 8px;
   word-break: break-all;
+}
+
+.result.success {
+  color: #a0d8d0;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(31, 157, 138, 0.2);
+}
+
+.result.error {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stats {
+  margin-top: 20px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.stats p {
+  margin: 0;
+  color: #d1e8e2;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats .saved {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #00ff88;
+  font-weight: 600;
 }
 
 .info {

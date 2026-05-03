@@ -1,16 +1,26 @@
 import { useState } from "react";
-import { CompressImage } from "../wailsjs/go/main/App";
+import { CompressImage, SelectFile, SelectOutputFolder } from "../wailsjs/go/main/App";
 import logo from "./assets/logo.png";
 import "./App.css";
-import { SelectFile } from "../wailsjs/go/main/App";
 
 function App() {
   const [filePath, setFilePath] = useState("");
   const [fileName, setFileName] = useState("");
+  const [outputDir, setOutputDir] = useState("");
   const [result, setResult] = useState("");
+  const [isError, setIsError] = useState(false);
   const [quality, setQuality] = useState(70);
   const [selectedQuality, setSelectedQuality] = useState("normal");
   const [loading, setLoading] = useState(false);
+  const [stats, setStats] = useState(null);
+
+  const formatSize = (bytes) => {
+    if (!bytes || bytes === 0) return "0 Byte";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  };
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -22,13 +32,16 @@ function App() {
       const allowed = ["jpg", "jpeg", "png", "webp", "pdf"];
 
       if (!allowed.includes(ext)) {
+        setIsError(true);
         setResult("Unsupported file type");
         return;
       }
 
       setFileName(file.name);
       setFilePath(file.path);
+      setIsError(false);
       setResult("");
+      setStats(null);
     }
   };
 
@@ -42,24 +55,34 @@ function App() {
 
     setLoading(true);
     setResult("");
+    setStats(null);
+    setIsError(false);
 
     try {
-      const res = await CompressImage(filePath, quality);
+      const res = await CompressImage(filePath, quality, outputDir);
 
       console.log("RESULT:", res);
 
-      // kalau error
-      if (typeof res === "string" && res.includes("ERROR")) {
-        setResult(res);
+      if (res.Error) {
+        setIsError(true);
+        setResult(res.Error);
         return;
       }
 
-      // kalau pakai object (step preview nanti)
       if (res.OutputPath) {
-        setResult("Success: " + res.OutputPath);
+        setIsError(false);
+        setResult("Compression complete");
+        setStats({
+          before: res.BeforeSize,
+          after: res.AfterSize,
+        });
       } else {
+        setIsError(true);
         setResult(JSON.stringify(res));
       }
+    } catch (e) {
+      setIsError(true);
+      setResult(String(e));
     } finally {
       setLoading(false);
     }
@@ -99,13 +122,16 @@ function App() {
               const allowed = ["jpg", "jpeg", "png", "webp", "pdf"];
 
               if (!allowed.includes(ext)) {
+                setIsError(true);
                 setResult("Unsupported file type");
                 return;
               }
 
               setFilePath(path);
               setFileName(name);
+              setIsError(false);
               setResult("");
+              setStats(null);
             }
           }}>
             Choose File
@@ -133,6 +159,28 @@ function App() {
           </button>
         </div>
 
+        <div className="output-section">
+          <div className="output-info">
+            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+            </svg>
+            <div className="output-text">
+              <span className="output-label">Output Folder</span>
+              <span className="output-path" title={outputDir}>
+                {outputDir ? (outputDir.length > 28 ? outputDir.substring(0, 25) + "..." : outputDir) : "Same as original file"}
+              </span>
+            </div>
+          </div>
+          <button className="change-btn" onClick={async () => {
+            const folder = await SelectOutputFolder();
+            if (folder) {
+              setOutputDir(folder);
+            }
+          }}>
+            Change
+          </button>
+        </div>
+
         <button className="compress-btn" onClick={handleCompress} disabled={loading}>
           {loading ? (
             <>
@@ -143,7 +191,15 @@ function App() {
           )}
         </button>
 
-        {result && <p className="result">{result}</p>}
+        {stats && (
+          <div className="stats animate-fade-in">
+            <p>Before: {formatSize(stats.before)}</p>
+            <p>After: {formatSize(stats.after)}</p>
+            <p className="saved">Saved: {stats.before > 0 ? ((stats.before - stats.after) / stats.before * 100).toFixed(1) : 0}%</p>
+          </div>
+        )}
+        
+        {result && <p className={`result ${isError ? "error" : "success"} animate-fade-in`}>{result}</p>}
       </div>
 
       <p className="info">

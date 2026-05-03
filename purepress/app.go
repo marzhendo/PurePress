@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/exec"
 	"purepress/internal/compressor"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -92,4 +93,30 @@ func (a *App) SelectFile() string {
 	}
 
 	return file
+}
+
+func (a *App) SelectMultipleFiles() []string {
+	files, err := runtime.OpenMultipleFilesDialog(a.ctx, runtime.OpenDialogOptions{
+		Title: "Select Files",
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "Supported Files",
+				Pattern:     "*.jpg;*.jpeg;*.png;*.webp;*.pdf",
+			},
+		},
+	})
+
+	if err != nil {
+		return nil
+	}
+
+	return files
+}
+
+func (a *App) OpenFile(path string) error {
+	return exec.Command("cmd", "/C", "start", "", path).Start()
+}
+
+func (a *App) OpenFolder(path string) error {
+	return exec.Command("explorer", "/select,", path).Start()
 }

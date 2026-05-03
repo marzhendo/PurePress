@@ -112,6 +112,58 @@ h1 {
   transform: scale(0.95);
 }
 
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-height: 120px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding-right: 4px;
+}
+
+.file-list::-webkit-scrollbar {
+  width: 4px;
+}
+.file-list::-webkit-scrollbar-thumb {
+  background: rgba(31, 157, 138, 0.5);
+  border-radius: 4px;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.file-name-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #a0d8d0;
+  max-width: 90%;
+}
+
+.remove-btn {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.remove-btn:hover {
+  color: #ff6b6b;
+}
+
 .quality {
   display: flex;
   justify-content: space-between;
@@ -308,6 +360,40 @@ h1 {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   color: #00ff88;
   font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #a0d8d0;
+  border: 1px solid rgba(31, 157, 138, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: rgba(31, 157, 138, 0.15);
+  border-color: rgba(31, 157, 138, 0.5);
+  color: #fff;
+}
+
+.action-btn:active {
+  transform: scale(0.98);
 }
 
 .info {

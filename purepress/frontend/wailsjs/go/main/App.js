@@ -10,8 +10,20 @@ export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }
 
+export function OpenFile(arg1) {
+  return window['go']['main']['App']['OpenFile'](arg1);
+}
+
+export function OpenFolder(arg1) {
+  return window['go']['main']['App']['OpenFolder'](arg1);
+}
+
 export function SelectFile() {
   return window['go']['main']['App']['SelectFile']();
+}
+
+export function SelectMultipleFiles() {
+  return window['go']['main']['App']['SelectMultipleFiles']();
 }
 
 export function SelectOutputFolder() {

@@ -6,6 +6,12 @@ export function CompressImage(arg1:string,arg2:number,arg3:string):Promise<main.
 
 export function Greet(arg1:string):Promise<string>;
 
+export function OpenFile(arg1:string):Promise<void>;
+
+export function OpenFolder(arg1:string):Promise<void>;
+
 export function SelectFile():Promise<string>;
+
+export function SelectMultipleFiles():Promise<Array<string>>;
 
 export function SelectOutputFolder():Promise<string>;

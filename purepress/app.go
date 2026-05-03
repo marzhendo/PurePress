@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"purepress/internal/compressor"
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
@@ -33,4 +34,22 @@ func (a *App) CompressImage(path string, quality int) string {
 		return "ERROR: " + err.Error()
 	}
 	return result
+}
+
+func (a *App) SelectFile() string {
+	file, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
+		Title: "Select Image",
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "Images",
+				Pattern:     "*.jpg;*.jpeg;*.png",
+			},
+		},
+	})
+
+	if err != nil {
+		return ""
+	}
+
+	return file
 }

@@ -14,6 +14,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState(null);
   const [progressMsg, setProgressMsg] = useState("");
+  const [fileResults, setFileResults] = useState([]);
 
   const formatSize = (bytes) => {
     if (!bytes || bytes === 0) return "0 Byte";
@@ -47,6 +48,7 @@ function App() {
     setOutPath("");
     setStats(null);
     setProgressMsg("");
+    setFileResults([]);
   };
 
   const removeFile = (index) => {
@@ -54,6 +56,7 @@ function App() {
     setIsError(false);
     setResult("");
     setStats(null);
+    setFileResults([]);
   };
 
   const handleCompress = async () => {
@@ -67,6 +70,7 @@ function App() {
     setOutPath("");
     setStats(null);
     setIsError(false);
+    setFileResults([]);
 
     let totalBefore = 0;
     let totalAfter = 0;
@@ -83,6 +87,11 @@ function App() {
         
         if (res.Error) {
           errors.push(`${file.name}: ${res.Error}`);
+          setFileResults(prev => [...prev, {
+            name: file.name,
+            status: "error",
+            message: res.Error
+          }]);
           continue;
         }
 
@@ -91,11 +100,33 @@ function App() {
           totalBefore += res.BeforeSize;
           totalAfter += res.AfterSize;
           lastOutPath = res.OutputPath;
+          
+          const savedPerc = res.BeforeSize > 0 
+            ? ((res.BeforeSize - res.AfterSize) / res.BeforeSize * 100).toFixed(1) 
+            : 0;
+
+          setFileResults(prev => [...prev, {
+            name: file.name,
+            before: res.BeforeSize,
+            after: res.AfterSize,
+            saved: savedPerc,
+            status: "success"
+          }]);
         } else {
           errors.push(`${file.name}: Unknown error`);
+          setFileResults(prev => [...prev, {
+            name: file.name,
+            status: "error",
+            message: "Unknown error"
+          }]);
         }
       } catch (e) {
         errors.push(`${file.name}: ${String(e)}`);
+        setFileResults(prev => [...prev, {
+          name: file.name,
+          status: "error",
+          message: String(e)
+        }]);
       }
     }
 
@@ -199,19 +230,19 @@ function App() {
             className={selectedQuality === "low" ? "active" : ""} 
             onClick={() => handleQuality("low")}
           >
-            Low
+            Low (Best Quality)
           </button>
           <button 
             className={selectedQuality === "normal" ? "active" : ""} 
             onClick={() => handleQuality("normal")}
           >
-            Normal
+            Normal (Balanced)
           </button>
           <button 
             className={selectedQuality === "high" ? "active" : ""} 
             onClick={() => handleQuality("high")}
           >
-            High
+            High (Smallest Size)
           </button>
         </div>
 
@@ -248,10 +279,34 @@ function App() {
         </button>
 
         {stats && (
-          <div className="stats animate-fade-in">
-            <p>Before: {formatSize(stats.before)}</p>
-            <p>After: {formatSize(stats.after)}</p>
-            <p className="saved">Saved: {stats.before > 0 ? ((stats.before - stats.after) / stats.before * 100).toFixed(1) : 0}%</p>
+          <div className="stats animate-fade-in result-card">
+            <p>Total Before: {formatSize(stats.before)}</p>
+            <p>Total After: {formatSize(stats.after)}</p>
+            <p className="saved">Total Saved: {stats.before > 0 ? ((stats.before - stats.after) / stats.before * 100).toFixed(1) : 0}%</p>
+            
+            {fileResults.length > 0 && (
+              <details className="file-details">
+                <summary>Details per file</summary>
+                <div className="file-details-list">
+                  {fileResults.map((res, i) => (
+                    <div key={i} className="file-details-item">
+                      <span className="file-details-name" title={res.name}>{res.name}</span>
+                      {res.status === "success" ? (
+                        <span className="file-details-status success">
+                          <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                          Saved {res.saved}%
+                        </span>
+                      ) : (
+                        <span className="file-details-status error">
+                          <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                          Failed
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </details>
+            )}
           </div>
         )}
         

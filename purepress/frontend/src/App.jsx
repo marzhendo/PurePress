@@ -194,7 +194,7 @@ function App() {
               ))}
             </div>
           ) : (
-            <p>Drag & Drop images here</p>
+            <p>Drag & drop files here or choose manually</p>
           )}
           <button className="choose-btn" onClick={async () => {
             const paths = await SelectMultipleFiles();

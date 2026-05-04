@@ -15,6 +15,9 @@ function App() {
   const [stats, setStats] = useState(null);
   const [progressMsg, setProgressMsg] = useState("");
   const [fileResults, setFileResults] = useState([]);
+  const [progress, setProgress] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [totalFiles, setTotalFiles] = useState(0);
 
   const formatSize = (bytes) => {
     if (!bytes || bytes === 0) return "0 Byte";
@@ -71,6 +74,9 @@ function App() {
     setStats(null);
     setIsError(false);
     setFileResults([]);
+    setProgress(0);
+    setCurrentIndex(0);
+    setTotalFiles(files.length);
 
     let totalBefore = 0;
     let totalAfter = 0;
@@ -80,6 +86,7 @@ function App() {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
+      setCurrentIndex(i + 1);
       setProgressMsg(`Compressing ${i + 1}/${files.length}...`);
       
       try {
@@ -128,6 +135,7 @@ function App() {
           message: String(e)
         }]);
       }
+      setProgress(((i + 1) / files.length) * 100);
     }
 
     if (successCount > 0) {
@@ -148,6 +156,9 @@ function App() {
 
     setLoading(false);
     setProgressMsg("");
+    setProgress(0);
+    setCurrentIndex(0);
+    setTotalFiles(0);
   };
 
   const handleQuality = (level) => {
@@ -277,6 +288,21 @@ function App() {
             `Compress ${files.length > 0 ? `(${files.length})` : ''}`
           )}
         </button>
+
+        {loading && totalFiles > 0 && (
+          <div className="progress-container">
+            <p>
+              Compressing {currentIndex}/{totalFiles}
+            </p>
+            <div className="progress-bar">
+              <div
+                className="progress-fill"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <p>{progress.toFixed(0)}%</p>
+          </div>
+        )}
 
         {stats && (
           <div className="stats animate-fade-in result-card">

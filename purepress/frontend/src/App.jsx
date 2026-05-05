@@ -357,6 +357,10 @@ function App() {
         <br />
         PDF compression powered by Ghostscript
       </p>
+
+      <div className="footer">
+        &copy; 2026 Marzhendo. All rights reserved.
+      </div>
     </div>
   );
 }

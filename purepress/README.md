@@ -1,75 +1,75 @@
 ﻿# 🌿 PurePress
 
-![PurePress UI](/docs/PurePress.png)
+> **High-performance, offline desktop application for image and PDF compression.**
 
-PurePress is a modern, lightweight, and blazing-fast desktop application for file compression. Built with **[Wails](https://wails.io/)** (Go + React), PurePress provides a seamless local file optimization experience without requiring an internet connection.
+![PurePress Preview](docs/screenshot.png)
 
----
+PurePress is a lightweight and blazing-fast desktop utility built to optimize images and PDF documents locally. Powered by a Go backend and a React frontend, it provides a seamless, privacy-first alternative to cloud-based compression tools. 
 
 ## ✨ Features
 
-- **Batch Compression:** Select multiple files or drag & drop multiple files at once. Compress them all in a single click!
-- **Multiple Input Formats:** Supports image formats (**JPG**, **PNG**, **WebP**) and document format (**PDF**).
-- **Smart Compression Levels:** 
-  - **Low** (Best visual quality, 90%)
-  - **Normal** (Balanced size and quality, 70%)
-  - **High** (Smallest file size, 40%)
-- **Custom Output Folder:** Choose where to save your compressed files. If unchanged, it defaults to the original file's location.
-- **Detailed Statistics:** Instantly see your "Before" and "After" sizes, as well as what percentage of space you just saved.
-- **Quick OS Actions:** One-click shortcuts to **Open File** or **Open Folder** immediately after a successful compression.
-- **Privacy First & Offline:** 100% offline processing. Your files never leave your local machine.
-- **Modern UI:** Sleek, responsive Glassmorphism design with clear loading states and progress indicators.
+- **Batch Processing**: Drag, drop, and compress multiple files simultaneously with unblocked background processing.
+- **Broad Format Support**: Efficiently handles **JPG, PNG, WebP**, and **PDF** files in a single unified pipeline.
+- **Smart Compression Profiles**: 
+  - *Low (Best Quality)* — Maximum visual retention for minimal artifacting.
+  - *Normal (Balanced)* — Optimal standard for general use and web delivery.
+  - *High (Smallest Size)* — Maximum disk space savings.
+- **Detailed Analytics**: Real-time progress tracking, granular per-file statistics, and total percentage-saved metrics.
+- **Filesystem Integration**: Select custom output directories and instantly open processed files or folders via native OS shortcuts.
+- **Privacy-First Architecture**: 100% local processing. No data is ever transmitted over the network.
 
----
+## 🛠 Tech Stack
+
+- **Backend**: Go (Golang) for fast, concurrent filesystem operations.
+- **Frontend**: React.js & Vite with a modern, responsive Glassmorphism UI.
+- **Framework**: [Wails v2](https://wails.io/) for native cross-platform desktop integration.
+- **Processing Engine**: Native Go image libraries & Ghostscript (`os/exec`) for advanced PDF reduction.
+
+## 💡 Why I Built This
+
+I needed a reliable, fast, and completely offline way to bulk-compress assets for development and document sharing. Existing web tools often impose file size limits, require waiting in queues, or compromise privacy by uploading sensitive documents to remote servers. PurePress solves this by bringing server-level compression capabilities directly to the local desktop wrapped in a clean, intuitive interface.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-To build and run this application from source, you will need:
 - [Go 1.25+](https://go.dev/dl/)
 - [Node.js 18+](https://nodejs.org/en/)
-- [Wails CLI](https://wails.io/docs/gettingstarted/installation)
-- **Ghostscript**: Required for PDF compression.
-  - *Windows*: Install Ghostscript (`gswin64c` / `gswin32c`) and ensure it's in your system `PATH`.
-  - *Mac/Linux*: Install `ghostscript` via brew or apt (`gs`).
+- **Ghostscript** (Required for PDF compression):
+  - **Windows**: Install [Ghostscript](https://ghostscript.com/) and ensure `gswin64c` or `gswin32c` is added to your system `PATH`.
+  - **macOS / Linux**: Install via package manager (`brew install ghostscript` or `sudo apt install ghostscript`).
 
-### 🛠️ Installation & Development
+### Installation
 
-1. Clone the repository and navigate to the project folder (`cd purepress`).
-2. Install the Wails CLI if you haven't already:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/marzhendo/PurePress.git
+   cd PurePress
+   ```
+
+2. **Install the Wails CLI**
    ```bash
    go install github.com/wailsapp/wails/v2/cmd/wails@latest
    ```
-3. Run the application in live development mode:
+
+3. **Start Development Server**
    ```bash
    wails dev
    ```
 
-### 📦 Building for Production
+### Building for Production
 
-To build a standalone executable for your operating system:
+Compile a standalone, optimized executable for your operating system:
 ```bash
 wails build
 ```
-The compiled binary will be available in the `build/bin/` directory.
+*The compiled binary will be generated inside the `build/bin/` directory.*
 
----
+## 📖 Usage Guide
 
-## 📖 How to Use
+1. **Import Files**: Drag and drop your files into the main dashboard pipeline or use the "Choose Files" native system dialog.
+2. **Configure Settings**: Select your preferred compression quality (Low, Normal, High).
+3. **Set Destination** *(Optional)*: Specify a custom output folder. If left unchanged, PurePress defaults to the original file's location.
+4. **Compress**: Click the "Compress" button to initiate the batch process. 
+5. **Review**: Monitor real-time progress and review your saved disk space on the results card. Use the quick-action buttons to instantly open the compressed assets immediately.
 
-1. **Launch PurePress.**
-2. **Select Files:** Click the **"Choose Files"** button to open the native OS file explorer, or **Drag & Drop** multiple files (JPG, PNG, WebP, PDF) straight into the app. Supported files will be listed in the app. If you accidentally added a file, click the `x` next to its name to remove it.
-3. **Select Quality:** Choose your desired compression level.
-4. **Choose Output Folder:** (Optional) Click **"Change"** in the output section to pick a specific directory for the compressed files. If skipped, files are saved in the same directory as the originals.
-5. **Compress:** Click the **"Compress"** button. The application will process your queue and show you live progress!
-6. **Review & Open:** View your disk savings stats right below the button. Click **Open File** to open the last compressed file, or **Open Folder** to reveal the output location in your file manager.
-
----
-
-## 🛠️ Technology Stack
-
-- **Backend:** Go (Golang), `os/exec` (Ghostscript)
-- **Frontend:** React.js, Vite
-- **Framework:** Wails v2
-- **Styling:** Vanilla CSS (Modern Glassmorphism)

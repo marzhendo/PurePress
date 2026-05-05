@@ -73,3 +73,7 @@ wails build
 4. **Compress**: Click the "Compress" button to initiate the batch process. 
 5. **Review**: Monitor real-time progress and review your saved disk space on the results card. Use the quick-action buttons to instantly open the compressed assets immediately.
 
+---
+
+&copy; 2026 Marzhendo. All rights reserved.
+

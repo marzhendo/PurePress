@@ -44,6 +44,8 @@ func CompressPDF(inputPath, outputPath string) error {
 		inputPath,
 	)
 
+	hideWindowContext(cmd)
+
 	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("PDF compression failed (%v). Ensure Ghostscript is installed and added to PATH", err)
 	}

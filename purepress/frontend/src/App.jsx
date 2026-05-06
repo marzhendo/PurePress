@@ -18,6 +18,7 @@ function App() {
   const [progress, setProgress] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalFiles, setTotalFiles] = useState(0);
+  const [statusMessage, setStatusMessage] = useState("");
 
   const formatSize = (bytes) => {
     if (!bytes || bytes === 0) return "0 Byte";
@@ -77,6 +78,7 @@ function App() {
     setProgress(0);
     setCurrentIndex(0);
     setTotalFiles(files.length);
+    setStatusMessage("Preparing compression...");
 
     let totalBefore = 0;
     let totalAfter = 0;
@@ -88,6 +90,13 @@ function App() {
       const file = files[i];
       setCurrentIndex(i + 1);
       setProgressMsg(`Compressing ${i + 1}/${files.length}...`);
+      
+      const isPdf = file.name.toLowerCase().endsWith(".pdf");
+      if (isPdf) {
+        setStatusMessage(`Optimizing PDF: ${file.name}`);
+      } else {
+        setStatusMessage(`Compressing image: ${file.name}`);
+      }
       
       try {
         const res = await CompressImage(file.path, quality, outputDir);
@@ -149,9 +158,11 @@ function App() {
     if (errors.length > 0) {
       setIsError(true);
       setResult(`Processed ${successCount}/${files.length}. Errors:\n${errors.join("\n")}`);
+      setStatusMessage("Some files failed to process");
     } else {
       setIsError(false);
       setResult(`Compression complete (${successCount} ${successCount === 1 ? 'file' : 'files'})`);
+      setStatusMessage("Compression complete");
     }
 
     setLoading(false);
@@ -301,6 +312,15 @@ function App() {
               />
             </div>
             <p>{progress.toFixed(0)}%</p>
+
+            <div className="status-message-container">
+              <span className="spinner small-spinner"></span>
+              <p className="status-message">{statusMessage}</p>
+            </div>
+            
+            {files.some(f => f.name.toLowerCase().endsWith(".pdf")) && (
+              <p className="pdf-note">PDF optimization may take slightly longer depending on file complexity.</p>
+            )}
           </div>
         )}
 

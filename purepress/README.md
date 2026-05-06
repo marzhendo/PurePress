@@ -1,8 +1,13 @@
 ﻿# 🌿 PurePress
 
+![Go](https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Wails](https://img.shields.io/badge/Wails-ED2224?style=flat-square)
+
 > **High-performance, offline desktop application for image and PDF compression.**
 
 ![PurePress Preview](/purepress/docs/PurePress.png)
+![PurePress in Action - Drag & Drop Compression](/docs/demo-purepress.gif)
 
 PurePress is a lightweight and blazing-fast desktop utility built to optimize images and PDF documents locally. Powered by a Go backend and a React frontend, it provides a seamless, privacy-first alternative to cloud-based compression tools. 
 

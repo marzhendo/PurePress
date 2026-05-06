@@ -7,7 +7,7 @@
 > **High-performance, offline desktop application for image and PDF compression.**
 
 ![PurePress Preview](/purepress/docs/PurePress.png)
-![PurePress in Action - Drag & Drop Compression](/docs/demo-purepress.gif)
+![PurePress in Action - Drag & Drop Compression](/purepress/docs/demo-purepress.gif)
 
 PurePress is a lightweight and blazing-fast desktop utility built to optimize images and PDF documents locally. Powered by a Go backend and a React frontend, it provides a seamless, privacy-first alternative to cloud-based compression tools. 
 
